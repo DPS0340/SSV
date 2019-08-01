@@ -31,7 +31,7 @@ function makeTable() {
                 td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: LightBlue;";
                 const func = function() {
                     const st = td.style.cssText;
-                    td.style = st + "border: 1px solid Aquamarine;"
+                    td.style = st + "border: 1px solid " + colortable[colori % colortable.length] + ";";
                     if(!editing) {
                         const overridediv = document.createElement("div");
                         const confirm = document.createElement("button");
