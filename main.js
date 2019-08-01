@@ -1,14 +1,24 @@
-const colortable = ["Aqua","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
+const colortable = ["Aqua","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 const days = ["월", "화", "수", "목", "금", "토", "일"];
 
 let colori = 0;
 
 let colors = new Map();
 
-function makeTable(row, col) {
+let editing = false
+
+let inputelem = null
+
+let tdarr = []
+
+function makeTable() {
+    const row = parseInt(document.getElementById("days").value);
+    const col = parseInt(document.getElementById("times").value);
+    if(!row || !times) {
+        return;
+    }
     const div = document.getElementById("showcase");
     const table = document.createElement("table");
-    table.style = "border: 1px solid Blue;";
     for(let i=0;i<col+1;i++) {
         const tr = document.createElement("tr");
         for(let j=0;j<row;j++) {
@@ -19,6 +29,66 @@ function makeTable(row, col) {
             } else {
                 td.innerHTML = days[j % 7] + "요일 " + i + "교시";
                 td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: LightBlue;";
+                const func = function() {
+                    const st = td.style.cssText;
+                    td.style = st + "border: 1px solid Aquamarine;"
+                    if(!editing) {
+                        const overridediv = document.createElement("div");
+                        const confirm = document.createElement("button");
+                        const decline = document.createElement("button");
+                        const input = document.createElement("input");
+                        confirm.classList.add("btn", "btn-primary");
+                        decline.classList.add("btn", "btn-primary");
+                        confirm.innerHTML = "확인";
+                        decline.innerHTML = "취소";
+                        input.placeholder = "프로그래밍";
+                        overridediv.appendChild(input);
+                        overridediv.appendChild(document.createElement("br"));
+                        overridediv.appendChild(confirm);
+                        overridediv.appendChild(decline);
+                        td.appendChild(overridediv);
+                        const remove = function() {
+                            overridediv.remove();
+                            editing = false;
+                            for(let i=0;i<tdarr.length;i++) {
+                                const td = tdarr[i];
+                                td.style.border = "none";
+                            }
+                            tdarr = [];
+                        }
+                        td.onclick = function(e) {
+                            e = window.event || e; 
+                            if(this === e.target) {
+                                remove();
+                                td.onclick = func;
+                            }
+                        }
+                        const submit = function() {
+                            if(input.value) {
+                                for(let i=0;i<tdarr.length;i++) {
+                                    const td = tdarr[i];
+                                    changeTable(td.id.split(":")[0], td.id.split(":")[1], input.value, colori, false);
+                                    td.style.border = "none";
+                                }
+                                tdarr = [];
+                                remove();
+                                colori++;
+                            }
+                        }
+                        decline.onclick = function() {
+                            remove();
+                        }
+                        confirm.onclick = submit
+                        input.addEventListener("keyup", function(event) {
+                            if (event.keyCode === 13) {
+                                submit();
+                            }
+                        });
+                        editing = true;
+                    }
+                    tdarr.push(td);
+                }
+                td.onclick = func;
             }
             td.id = j + ":" + i;
             tr.appendChild(td);
@@ -26,110 +96,29 @@ function makeTable(row, col) {
         table.appendChild(tr);
     }
     div.appendChild(table);
+    document.getElementById("start").style.display = "none";
+    document.getElementById("main").style.margin = "auto";
+    document.getElementById("main").style.width = "1000px";
+    document.getElementById("main").style.display = "block";
 }
+
 
 function changeTable(row, col, name, colorindex, override=false) {
     const td = document.getElementById(row + ":" + col);
-    if(td.innerHTML != days[row % 7] + "요일 " + col + "교시" && override == false) {
-        message(days[row % 7] + "요일 " + col + "교시: 시간 충돌!", td, name, row, col, colorindex);
-    }
-    else {
-        colors.set(row + ":" + col, colorindex);
-    }
+    colors.set(row + ":" + col, colorindex);
     td.innerHTML = days[row % 7] + "요일 " + col + "교시: " + name;
     td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: " + colortable[colorindex % colortable.length] + ";";
 }
 
-function message(s, td, newlec, row, col, colorindex) {
-    if(td == undefined) {
-        const div = document.getElementById("message");
-        const box = document.createElement("div");
-        const span = document.createElement("span");
-        const close = document.createElement("button");
-        span.innerHTML = s;
-        close.innerHTML = "X";
-        close.classList.add("btn", "btn-link");
-        close.onclick = function() {
-            div.removeChild(box);
-        }
-        box.appendChild(span);
-        box.appendChild(close);
-        div.appendChild(box);
-        return;
-    }
-    const box = document.createElement("div");
-    const span = document.createElement("span");
-    const oldlec = td.innerHTML.split(":")[1].trim();
-    const div = document.getElementById("message");
-    const changeold = document.createElement("button");
-    const changenew = document.createElement("button");
-    const close = document.createElement("button");
-    span.innerHTML = s;
-    changeold.classList.add("btn", "btn-link");
-    changenew.classList.add("btn", "btn-link");
-    close.classList.add("btn", "btn-link");
-    changeold.innerHTML = oldlec;
-    changenew.innerHTML = newlec;
-    close.innerHTML = "X";
-    changeold.onclick = function() {
-        const oldindex = colors.get(row + ":" + col);
-        changeTable(row, col, oldlec, oldindex, true);
-        div.removeChild(box);
-    }
-    changenew.onclick = function() {
-        changeTable(row, col, newlec, colorindex, true);
-        div.removeChild(box);
-    }
-    close.onclick = function() {
-        div.removeChild(box);
-    }
-    box.appendChild(span);
-    box.appendChild(changeold);
-    box.appendChild(changenew);
-    box.appendChild(close);
-    div.appendChild(box);
-}
+document.getElementById("init").onclick = makeTable;
 
-makeTable(5, 12);
-
-function run() {
-    const s = document.getElementById("box").value;
-    const lec = document.getElementById("lecture").value;
-    if(!s || !lec) {
-        message("폼이 비었습니다!");
-        return;
-    }
-    document.getElementById("box").value = "";
-    document.getElementById("lecture").value = "";
-    const arr = s.split(',');
-    for(let i=0;i<arr.length;i++) {
-        const parsed = arr[i].trim();
-        const day = days.findIndex((elem) => elem == parsed[0]);
-        if(day != -1) {
-            const twonum = parsed.split(" ")[1].trim().split("~");
-            if(twonum.length == 2) {
-                for(let j=parseInt(twonum[0]);j<=parseInt(twonum[1]);j++) {
-                    changeTable(day, j, lec, colori);
-                }
-            } else if(twonum.length == 1) {
-                changeTable(day, twonum[0], lec, colori);
-            }
-        }
-        else {
-            message("파싱 실패!");
-        }
-    }
-    colori++;
-};
-
-document.getElementById("append").onclick = run;
-document.getElementById("box").addEventListener("keyup", function(event) {
+document.getElementById("times").addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
-      run();
+        makeTable();
     }
 });
-document.getElementById("lecture").addEventListener("keyup", function(event) {
+document.getElementById("days").addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
-      run();
+        makeTable();
     }
 });

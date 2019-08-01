@@ -9,17 +9,19 @@
     <title>수강신청 Visualizer By jiho lee</title>
 </head>
 <body>
-    <div class="text-center" style="margin: auto; width: 1000px">
+    <div class="text-center" style="margin: auto; width: 1000px;">
         <p class="font-weight-bold" style="font-size: 32px;">수강신청 Visualizer By jiho lee</p>
-        <input id="box" type="text" placeholder="월 4, 수 1~3">
-        <input id="lecture" type="text" placeholder="프로그래밍">
-        <button id="append" class="btn btn-primary">추가</button>
+    </div>
+    <div class="text-center" id="main" style="margin: auto; width: 1000px; display: none;">
         <br>
         <div id="message"></div>
         <div id="showcase"></div>
-        <div id="logo" style="margin: auto; width: 1000px;">
-            <a href="https://github.com/DPS0340/SSV"><img src="GitHub-Mark.png" style="max-height: 100px; max-width: 100px;"/></a>
-        </div>
+    </div>
+    <div class="text-center" id="start" style="margin: auto; width: 1000px; font-size: 20px; font-weight: bold;">
+        <span>makeTable(</span><input id="days" type="number", placeholder="5(days per week)"><span>, </span><input id="times" type="number", placeholder="13(times)"><span>)</span><button id="init" class="btn btn-link" style="margin-left: -4px; font-size: 20px; font-weight: bold;">;</button>
+    </div>
+    <div class="text-center" id="logo" style="margin: auto; width: 1000px;">
+        <a href="https://github.com/DPS0340/SSV"><img src="GitHub-Mark.png" style="max-height: 100px; max-width: 100px;"/></a>
     </div>
 </body>
 <script src="main.js"></script>
