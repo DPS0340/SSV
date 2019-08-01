@@ -1,8 +1,9 @@
 const colortable = ["Aqua","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
 const days = ["월", "화", "수", "목", "금", "토", "일"];
 
-let colori = 0
+let colori = 0;
 
+let colors = new Map();
 
 function makeTable(row, col) {
     const div = document.getElementById("showcase");
@@ -27,30 +28,78 @@ function makeTable(row, col) {
     div.appendChild(table);
 }
 
-function changeTable(row, col, name, colorindex) {
+function changeTable(row, col, name, colorindex, override=false) {
     const td = document.getElementById(row + ":" + col);
-    if(td.innerHTML != days[row % 7] + "요일 " + col + "교시") {
-        message(days[row % 7] + "요일 " + col + "교시: 시간 충돌!");
+    if(td.innerHTML != days[row % 7] + "요일 " + col + "교시" && override == false) {
+        message(days[row % 7] + "요일 " + col + "교시: 시간 충돌!", td, name, row, col, colorindex);
+    }
+    else {
+        colors.set(row + ":" + col, colorindex);
     }
     td.innerHTML = days[row % 7] + "요일 " + col + "교시: " + name;
     td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: " + colortable[colorindex % colortable.length] + ";";
 }
 
-function message(s) {
+function message(s, td, newlec, row, col, colorindex) {
+    if(td == undefined) {
+        const div = document.getElementById("message");
+        const box = document.createElement("div");
+        const span = document.createElement("span");
+        const close = document.createElement("button");
+        span.innerHTML = s;
+        close.innerHTML = "X";
+        close.classList.add("btn", "btn-link");
+        close.onclick = function() {
+            div.removeChild(box);
+        }
+        box.appendChild(span);
+        box.appendChild(close);
+        div.appendChild(box);
+        return;
+    }
+    const box = document.createElement("div");
     const span = document.createElement("span");
-    const br = document.createElement("br");
-    span.innerHTML = s;
+    const oldlec = td.innerHTML.split(":")[1].trim();
     const div = document.getElementById("message");
-    div.appendChild(span);
-    div.appendChild(br);
+    const changeold = document.createElement("button");
+    const changenew = document.createElement("button");
+    const close = document.createElement("button");
+    span.innerHTML = s;
+    changeold.classList.add("btn", "btn-link");
+    changenew.classList.add("btn", "btn-link");
+    close.classList.add("btn", "btn-link");
+    changeold.innerHTML = oldlec;
+    changenew.innerHTML = newlec;
+    close.innerHTML = "X";
+    changeold.onclick = function() {
+        const oldindex = colors.get(row + ":" + col);
+        changeTable(row, col, oldlec, oldindex, true);
+        div.removeChild(box);
+    }
+    changenew.onclick = function() {
+        changeTable(row, col, newlec, colorindex, true);
+        div.removeChild(box);
+    }
+    close.onclick = function() {
+        div.removeChild(box);
+    }
+    box.appendChild(span);
+    box.appendChild(changeold);
+    box.appendChild(changenew);
+    box.appendChild(close);
+    div.appendChild(box);
 }
 
 makeTable(5, 12);
 
 function run() {
     const s = document.getElementById("box").value;
-    document.getElementById("box").value = "";
     const lec = document.getElementById("lecture").value;
+    if(!s || !lec) {
+        message("폼이 비었습니다!");
+        return;
+    }
+    document.getElementById("box").value = "";
     document.getElementById("lecture").value = "";
     const arr = s.split(',');
     for(let i=0;i<arr.length;i++) {
@@ -67,7 +116,7 @@ function run() {
             }
         }
         else {
-            message("파싱 실패!")
+            message("파싱 실패!");
         }
     }
     colori++;
