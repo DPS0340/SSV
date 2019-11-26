@@ -96,6 +96,14 @@ function makeTable() {
         table.appendChild(tr);
     }
     div.appendChild(table);
+    const printButton = document.createElement("button");
+    printButton.classList.add("btn", "btn-primary");
+    printButton.innerHTML = "프린트";
+    printButton.onclick = function() {
+        window.print();
+        return;
+    }
+    div.appendChild(printButton);
     document.getElementById("start").style.display = "none";
     document.getElementById("main").style.margin = "auto";
     document.getElementById("main").style.width = "1000px";
@@ -107,7 +115,7 @@ function changeTable(row, col, name, colorindex, override=false) {
     const td = document.getElementById(row + ":" + col);
     colors.set(row + ":" + col, colorindex);
     td.innerHTML = days[row % 7] + "요일 " + col + "교시: " + name;
-    td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: " + colortable[colorindex % colortable.length] + ";";
+    td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: " + colortable[colorindex % colortable.length] + " !important;";
 }
 
 document.getElementById("init").onclick = makeTable;
