@@ -1,0 +1,3 @@
+function submit() {
+    $("visualizerForm").submit();
+};

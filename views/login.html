@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="src/external/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SSV</title>
+</head>
+<body>
+<nav id="navbar1" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/">SSV</a>
+        <button type="button" class="navbar-toggler collapsed navbar-toggler-right bg-light"
+                data-toggle="collapse" data-target="#navbar2"
+                aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbar2">
+        <ul id="navbarInner" class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">메인</a>
+            </li>
+            <script>
+                if({{ hasCookie }}) {
+                    document.getElementById("navbarInner").innerHTML += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"visualizer\">시간표</a></li>";
+                } else {
+                    document.getElementById("navbarInner").innerHTML += "<li class=\"nav-item\"><a class=\"nav-link\" href=\"init\">시간표</a></li>";
+                }
+            </script>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/login">로그인</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="text-center jumbotron well" id="jumbo" style="margin: auto; width: 1000px;">
+    <div class="container">
+        <h1>로그인 페이지</h1>
+        <p>아직 안만들었습니다.</p>
+    </div>
+</div>
+</body>
+</body>
+<script src="src/external/js/jquery-3.4.1.min.js"></script>
+<script src="src/external/js/bootstrap.js"></script>
+<script src="src/js/index.js"></script>
+</html>
