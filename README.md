@@ -1,3 +1,6 @@
 # 수강신청 Visualizer
 
-<https://dps0340.github.io/SSV/main.html>
+<https://soogangvisualizer.appspot.com/>
+
+
+now moved to GCP App Engine backend
