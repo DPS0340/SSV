@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <link rel="stylesheet" href="src/external/css/bootstrap.css">
+    <link rel="stylesheet" href="src/css/visualizer.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -33,11 +34,11 @@
         </ul>
     </div>
 </nav>
-<div class="text-center" id="main" style="margin: auto; width: 1000px; display: none;">
+<div class="text-center container-fluid" id="main" style="margin: auto; width: 100%; display: none;">
     <br>
     <div id="message"></div>
     <button class="btn btn-primary" onclick="location.href = '/reset'">초기화</button>
-    <div id="showcase"></div>
+    <div class="table-responsive" id="showcase"></div>
 </div>
 </body>
 <script src="src/external/js/jquery-3.4.1.min.js"></script>

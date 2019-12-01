@@ -14,16 +14,20 @@ function makeTable(days, times) {
     const col = times;
     const div = document.getElementById("showcase");
     const table = document.createElement("table");
+    table.id = "table";
+    table.className = "table table-bordered";
     for(let i=0;i<col+1;i++) {
         const tr = document.createElement("tr");
         for(let j=0;j<row;j++) {
             const td = document.createElement("td");
             if(i === 0) {
                 td.innerHTML = daysArray[j % 7] + "요일";
-                td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: Aquamarine;";
+                td.style = "width: 10%; height: 150px; text-align: center; color: White; background-color: Aquamarine;";
+                td.classList.add("col-md-1");
             } else {
                 td.innerHTML = daysArray[j % 7] + "요일 " + i + "교시";
-                td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: LightBlue;";
+                td.classList.add("col-md-1");
+                td.style = "width: 10%; height: 150px; text-align: center; color: White; background-color: LightBlue;";
                 const func = function() {
                     const st = td.style.cssText;
                     td.style = st + "border: 1px solid " + colortable[colori % colortable.length] + ";";
@@ -95,12 +99,10 @@ function makeTable(days, times) {
     printButton.classList.add("btn", "btn-primary");
     printButton.innerHTML = "프린트";
     printButton.onclick = function() {
-        window.print();
-        return;
+        printData();
     };
     div.appendChild(printButton);
     document.getElementById("main").style.margin = "auto";
-    document.getElementById("main").style.width = "1000px";
     document.getElementById("main").style.display = "block";
 }
 
@@ -109,5 +111,13 @@ function changeTable(row, col, name, colorindex, override=false) {
     const td = document.getElementById(row + ":" + col);
     colors.set(row + ":" + col, colorindex);
     td.innerHTML = daysArray[row % 7] + "요일 " + col + "교시: " + name;
-    td.style = "width: 200px; height: 200px; text-align: center; color: White; background-color: " + colortable[colorindex % colortable.length] + " !important;";
+    td.style = "width: 10%; height: 150px; text-align: center; color: White; background-color: " + colortable[colorindex % colortable.length] + " !important;";
+}
+
+function printData() {
+    const divToPrint = document.getElementById("table");
+    const newWin = window.open("");
+    newWin.document.write(divToPrint.outerHTML);
+    newWin.print();
+    newWin.close();
 }

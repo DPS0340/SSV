@@ -1,0 +1,5 @@
+@media print {
+    div {
+        background: #333333 !important;
+    }
+}

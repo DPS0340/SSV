@@ -33,11 +33,11 @@
         </ul>
     </div>
 </nav>
-<div class="text-center" id="start" style="margin: auto; width: 1000px; font-size: 20px; font-weight: bold;">
-    <form id="visualizerForm" method="post" action="visualizer">
-        <input id="days" name="days" type="number" placeholder="5(days per week)" />
-        <input id="times" name="times" type="number" placeholder="13(times)" />
-        <input type="submit" id="submit" class="btn btn-primary" value="submit" style="margin-left: -4px; font-size: 20px; font-weight: bold;" />
+<div class="text-center" id="start" style="margin: auto; width: 100%; font-weight: bold;">
+    <form id="visualizerForm" method="get" action="/visualizer">
+        <input type="number" name="days" placeholder="5(days per week)" />
+        <input type="number" name="times" placeholder="13(times)" />
+        <input type="submit" class="btn btn-primary" value="submit" style="margin-left: -4px; font-weight: bold;" />
     </form>
 </div>
 </body>
