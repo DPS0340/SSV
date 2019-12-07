@@ -10,6 +10,7 @@
     "clean-css": ">=4.1.11",
     "consolidate": "^0.15.1",
     "constantinople": ">=3.1.1",
+    "consolidate": "^0.15.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.0.1",
@@ -17,6 +18,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "mustache": "^3.1.0"
+    "mustache": "^3.1.0",
+    "clean-css": ">=4.1.11",
   }
 }
